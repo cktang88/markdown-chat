@@ -5,13 +5,18 @@
     "test": "jest"
   },
   "dependencies": {
+    "buffer": "^5.6.0",
+    "events": "^3.1.0",
     "simple-peer": "^9.7.2",
     "svelte": "^3.21.0"
   },
   "devDependencies": {
+    "@babel/polyfill": "^7.10.4",
     "@babel/preset-typescript": "^7.10.4",
     "@snowpack/app-scripts-svelte": "^1.2.0",
     "@snowpack/plugin-babel": "^1.4.0",
+    "@types/node": "^14.0.14",
+    "@types/simple-peer": "^9.6.0",
     "snowpack": "^2.5.0",
     "typescript": "^3.9.6"
   }

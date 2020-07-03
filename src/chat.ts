@@ -1,7 +1,11 @@
-// import Peer from "simple-peer";
-let Peer = (conf) => {
-  on: () => {};
-};
+var buffer = require("buffer");
+var events = require("events");
+import Events from "events";
+import Buffer from "buffer";
+import Peer from "simple-peer";
+// let Peer = (conf) => {
+//   on: () => {};
+// };
 
 const p = new Peer({
   initiator: location.hash === "#1",
@@ -28,3 +32,4 @@ p.on("connect", () => {
 p.on("data", (data) => {
   console.log("data: " + data);
 });
+// let a = 1;

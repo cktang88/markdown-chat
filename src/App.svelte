@@ -1,6 +1,11 @@
 <script>
   import "./chat";
-  const message = "Learn Svelte";
+
+  let message = "Learn Svelte";
+  //   function handleChange(e) {
+  //     console.log(e.target.value);
+  //     message = e.target.value;
+  //   }
 </script>
 
 <style>
@@ -63,7 +68,7 @@
       }
     </style>
     <form>
-      <textarea id="incoming" />
+      <textarea id="incoming" bind:value={message} />
       <button type="submit">submit</button>
     </form>
   </header>

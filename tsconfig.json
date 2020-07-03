@@ -3,7 +3,8 @@
   "exclude": ["node_modules/*"],
   "compilerOptions": {
     "target": "es2019",
-    "types": ["svelte"],
+    "allowSyntheticDefaultImports": true,
+    "types": ["svelte", "browser", "node"],
     "moduleResolution": "node"
   }
 }
