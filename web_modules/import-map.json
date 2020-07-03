@@ -1,6 +1,0 @@
-{
-  "imports": {
-    "simple-peer": "./simple-peer.js",
-    "svelte/internal": "./svelte/internal.js"
-  }
-}
