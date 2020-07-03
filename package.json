@@ -1,0 +1,18 @@
+{
+  "scripts": {
+    "start": "snowpack dev",
+    "build": "snowpack build",
+    "test": "jest"
+  },
+  "dependencies": {
+    "simple-peer": "^9.7.2",
+    "svelte": "^3.21.0"
+  },
+  "devDependencies": {
+    "@babel/preset-typescript": "^7.10.4",
+    "@snowpack/app-scripts-svelte": "^1.2.0",
+    "@snowpack/plugin-babel": "^1.4.0",
+    "snowpack": "^2.5.0",
+    "typescript": "^3.9.6"
+  }
+}
