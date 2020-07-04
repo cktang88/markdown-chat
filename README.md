@@ -24,6 +24,7 @@ How to connect (essentially just need to swap SDPs):
 ### MVP
 
 - webrtc
+
   - feross/simple-peer uses Google's public STUN server by default, but has no TURN
   - still need signalling server https://stackoverflow.com/questions/23715773/is-stun-server-absolutely-necessary-for-webrtc-when-i-have-a-socket-io-based-sig
     - ~~serverless server w/ MongoDB to establish pairing p2p connections?~~
@@ -33,10 +34,13 @@ How to connect (essentially just need to swap SDPs):
       - could also use MongoDB realm...
       - sends email invite
       - or in-app live-update UI of pending invites (only if user is logged on)
+
 - markdown support, with syntax highlighting of code snippets...
 
 ### Nice to haves
 
+- editable
+- threads
 - support multiple users chatting at once...
 - auto-indent/format code?
 - full text search
@@ -50,6 +54,8 @@ How to connect (essentially just need to swap SDPs):
 
 - comparison of instant messaging protocols - https://en.wikipedia.org/wiki/Comparison_of_instant_messaging_protocols
 
+FB messenger has markdown, but no editing/syntax highlight/threads
+
 ### Other p2p chat tech
 
 --> if it's a tech, must be actively maintained...
@@ -57,6 +63,8 @@ How to connect (essentially just need to swap SDPs):
 https://github.com/cabal-club/
 
 https://matrix.org/
+
+- - lots of ppl using Matrix https://techcrunch.com/2020/05/21/automattic-pumps-4-6m-into-new-vector-to-help-grow-matrix-an-open-decentralized-comms-ecosystem/
 
 master list: https://github.com/redecentralize/alternative-internet
 
@@ -70,10 +78,13 @@ https://github.com/libp2p/js-libp2p-webrtc-star
 
 https://delta.chat/en/ - on email network (IMAP/SMTP transfer protocol)
 
+- can't do markdown
 - seems to be a bit of lag b/c email not instant?
 - can't see when someone's typing...
 - cool idea, but it really is just email, https://news.ycombinator.com/item?id=19216827
 
 https://about.riot.im/ has markdown, is on Matrix
 
-- lots of ppl using Matrix https://techcrunch.com/2020/05/21/automattic-pumps-4-6m-into-new-vector-to-help-grow-matrix-an-open-decentralized-comms-ecosystem/
+- is single line editor, not great for large messages
+- has no threads
+- does have edit button
