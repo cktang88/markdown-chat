@@ -47,3 +47,33 @@ How to connect (essentially just need to swap SDPs):
 - Test if behind symmetric nat - https://webrtchacks.com/symmetric-nat/
 
 - Further reading on STUN vs TURN: https://www.twilio.com/docs/stun-turn/faq
+
+- comparison of instant messaging protocols - https://en.wikipedia.org/wiki/Comparison_of_instant_messaging_protocols
+
+### Other p2p chat tech
+
+--> if it's a tech, must be actively maintained...
+
+https://github.com/cabal-club/
+
+https://matrix.org/
+
+master list: https://github.com/redecentralize/alternative-internet
+
+free signal server - https://github.com/mafintosh/signalhub (peerjs cloud is also free, but abandoned?)
+
+https://github.com/mafintosh/webcat
+
+https://github.com/libp2p/js-libp2p-webrtc-star
+
+### Other p2p chat implementations
+
+https://delta.chat/en/ - on email network (IMAP/SMTP transfer protocol)
+
+- seems to be a bit of lag b/c email not instant?
+- can't see when someone's typing...
+- cool idea, but it really is just email, https://news.ycombinator.com/item?id=19216827
+
+https://about.riot.im/ has markdown, is on Matrix
+
+- lots of ppl using Matrix https://techcrunch.com/2020/05/21/automattic-pumps-4-6m-into-new-vector-to-help-grow-matrix-an-open-decentralized-comms-ecosystem/
