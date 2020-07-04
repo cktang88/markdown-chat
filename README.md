@@ -24,11 +24,12 @@ How to connect (essentially just need to swap SDPs):
 ### MVP
 
 - webrtc
-  - ~~serverless STUN/TURN server w/ MongoDB to establish pairing p2p connections?~~
-  - firebase for SSO connection to users for chat (can look up user by email to send invite...)
-    - could also use MongoDB realm...
-    - sends email invite
-    - or in-app live-update UI of pending invites (only if user is logged on)
+  - feross/simple-peer uses Google's public STUN server by default, but has no TURN
+    - ~~serverless STUN/TURN server w/ MongoDB to establish pairing p2p connections?~~
+    - firebase for SSO connection to users for chat (can look up user by email to send invite...)
+      - could also use MongoDB realm...
+      - sends email invite
+      - or in-app live-update UI of pending invites (only if user is logged on)
 - markdown support, with syntax highlighting of code snippets...
 
 ### Nice to haves
@@ -37,3 +38,5 @@ How to connect (essentially just need to swap SDPs):
 - auto-indent/format code?
 - full text search
 - persist w/ IndexedDB using https://github.com/localForage/localForage
+
+Further reading on STUN vs TURN: https://www.twilio.com/docs/stun-turn/faq
