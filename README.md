@@ -25,7 +25,10 @@ How to connect (essentially just need to swap SDPs):
 
 - webrtc
   - feross/simple-peer uses Google's public STUN server by default, but has no TURN
-    - ~~serverless STUN/TURN server w/ MongoDB to establish pairing p2p connections?~~
+  - still need signalling server https://stackoverflow.com/questions/23715773/is-stun-server-absolutely-necessary-for-webrtc-when-i-have-a-socket-io-based-sig
+    - ~~serverless server w/ MongoDB to establish pairing p2p connections?~~
+    - serverless ephemeral in-memory storage...
+      - v1: just locally host signal server...
     - firebase for SSO connection to users for chat (can look up user by email to send invite...)
       - could also use MongoDB realm...
       - sends email invite
@@ -39,4 +42,8 @@ How to connect (essentially just need to swap SDPs):
 - full text search
 - persist w/ IndexedDB using https://github.com/localForage/localForage
 
-Further reading on STUN vs TURN: https://www.twilio.com/docs/stun-turn/faq
+### Further reading:
+
+- Test if behind symmetric nat - https://webrtchacks.com/symmetric-nat/
+
+- Further reading on STUN vs TURN: https://www.twilio.com/docs/stun-turn/faq
