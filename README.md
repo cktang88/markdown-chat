@@ -26,11 +26,12 @@ How to connect (essentially just need to swap SDPs):
 - webrtc
 
   - feross/simple-peer uses Google's public STUN server by default, but has no TURN
+  - signalling server impl: https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Signaling_and_video_calling
   - still need signalling server https://stackoverflow.com/questions/23715773/is-stun-server-absolutely-necessary-for-webrtc-when-i-have-a-socket-io-based-sig
     - ~~serverless server w/ MongoDB to establish pairing p2p connections?~~
     - serverless ephemeral in-memory storage...
       - v1: just locally host signal server...
-    - firebase for SSO connection to users for chat (can look up user by email to send invite...)
+    - Firebase for SSO connection to users for chat (can look up user by email to send invite...)
       - could also use MongoDB realm...
       - sends email invite
       - or in-app live-update UI of pending invites (only if user is logged on)
@@ -88,3 +89,31 @@ https://about.riot.im/ has markdown, is on Matrix
 - is single line editor, not great for large messages
 - has no threads
 - does have edit button
+
+### collaborative code editors
+
+- need to have chat
+- ideally be able to execute it?
+- need to be able to see others' cursors/see highlighting
+
+https://codecollab.io
+
+- can execute, can see cursor, no chat
+
+https://codebunk.com
+
+- execute, no cursor, chat
+
+http://collabedit.com
+
+- chat, no cursor, no execute
+
+https://codeshare.io
+
+- no execute, no cursor, no chat
+
+repl.it
+
+- execute, no cursor, no chat
+
+--> Monaco editor + https://github.com/convergencelabs/monaco-collab-ext
