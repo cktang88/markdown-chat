@@ -1,10 +1,20 @@
 <html>
   <body>
     <style>
+      html {
+        background-color: #d6d7dd;
+      }
       #outgoing {
         width: 600px;
         word-wrap: break-word;
         white-space: normal;
+        border: 1px solid black;
+      }
+      #incoming {
+        width: 300px;
+        height: 200px;
+        margin: 20px;
+        font-size: 16px;
       }
     </style>
     <form>
@@ -28,7 +38,9 @@
 
       document.querySelector("form").addEventListener("submit", (ev) => {
         ev.preventDefault();
-        p.signal(JSON.parse(document.getElementById("incoming").value || "{}"));
+        let val = document.getElementById("incoming").value;
+        // console.log(val);
+        p.signal(JSON.parse(val));
       });
 
       p.on("connect", () => {
