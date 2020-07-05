@@ -1,5 +1,13 @@
 # markdown chat app
 
+### Demo
+
+website at: https://mdchat.netlify.app
+server at: https://glitch.com/edit/#!/signalserver
+
+
+
+
 NOTE: MARKDOWN IS INHERENTLY UNSAFE:
 https://github.com/showdownjs/showdown/wiki/Markdown's-XSS-Vulnerability-(and-how-to-mitigate-it)
 
