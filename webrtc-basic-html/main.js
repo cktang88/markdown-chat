@@ -1,5 +1,6 @@
 let p;
 
+let answerPoller;
 let isConnected = false;
 
 const clearOutput = (val = "") => {
@@ -58,6 +59,32 @@ let reConnect = async (ev) => {
       });
   }
 
+  let pollForAnswer = () => {
+    let iters = 0;
+    // clear previous polls
+    if (answerPoller) {
+      console.log("cancelled answer polling for previous connection.");
+      clearInterval(answerPoller);
+    }
+    answerPoller = setInterval(function () {
+      clearOutput("waiting..." + iters);
+      fetch(
+        `https://signalserver.glitch.me/answer/${
+          document.getElementById("them").value
+        }`
+        //${ document.getElementById("me").value }
+      )
+        .then((res) => res.json())
+        .then((answer) => {
+          if (!answer || Object.keys(answer).length == 0) return;
+          console.log("received answer: ", answer);
+          clearInterval(answerPoller);
+          p.signal(JSON.parse(answer));
+        });
+      iters += 1;
+    }, 1000);
+  };
+
   p.on("error", (err) => console.log("error", err));
 
   p.on("signal", (data) => {
@@ -76,26 +103,7 @@ let reConnect = async (ev) => {
         }),
       })
         .then((res) => res.json())
-        .then(() => {
-          let iters = 0;
-          let interval = setInterval(function () {
-            clearOutput("waiting..." + iters);
-            fetch(
-              `https://signalserver.glitch.me/answer/${
-                document.getElementById("them").value
-              }`
-              //${ document.getElementById("me").value }
-            )
-              .then((res) => res.json())
-              .then((answer) => {
-                if (!answer || Object.keys(answer).length == 0) return;
-                console.log("received answer: ", answer);
-                clearInterval(interval);
-                p.signal(JSON.parse(answer));
-              });
-            iters += 1;
-          }, 1000);
-        });
+        .then(pollForAnswer);
     } else {
       fetch("https://signalserver.glitch.me/answer", {
         method: "POST",
