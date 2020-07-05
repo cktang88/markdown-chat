@@ -51,6 +51,9 @@
       const clearOutput = () => {
         document.getElementById("outgoing").innerHTML = "";
       };
+      const clearInput = () => {
+        document.getElementById("incoming").value = "";
+      };
       const addText = (html) => {
         document.getElementById("outgoing").innerHTML += html;
       };
@@ -62,7 +65,7 @@
         if (!isConnected) p.signal(JSON.parse(val));
         else {
           p.send(val);
-          clearOutput();
+          clearInput();
           addText(`<p class="me">${val}</p>`);
         }
       });
@@ -71,6 +74,7 @@
         console.log("CONNECTED");
         isConnected = true;
         clearOutput();
+        // clearInput();
       });
 
       p.on("data", (data) => {
