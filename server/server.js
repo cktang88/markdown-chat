@@ -3,6 +3,7 @@ const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
+const initiators = {};
 const offers = {};
 const answers = {};
 
@@ -11,6 +12,18 @@ app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.post("/assignInitiator", (req, res) => {
+  let { me, them } = req.body;
+  // first person to check this endpoint is assigned to be the initiator
+  if (them in initiators) {
+    res.status(200).json({ isInitiator: false });
+  } else {
+    initiators[me] = true;
+    res.status(200).json({ isInitiator: true });
+  }
+  console.log(initiators);
+});
 
 app.post("/offer", (req, res) => {
   let { me, them, sdp } = req.body;
@@ -42,6 +55,9 @@ app.post("/answer", (req, res) => {
   // store answer
   answers[me] = sdp;
   res.status(200).json("Answer received by server.");
+
+  // can reset initiators
+  delete initiators[them];
 });
 
 // listen for requests :)
