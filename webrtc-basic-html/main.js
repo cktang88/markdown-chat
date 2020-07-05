@@ -85,6 +85,7 @@ let reConnect = (ev) => {
     console.log("CONNECTED");
     isConnected = true;
     clearOutput();
+    addText(`<p class="me">Connected!</p>`);
     // clearInput();
   });
 
@@ -92,6 +93,9 @@ let reConnect = (ev) => {
     console.log("data: " + data);
     addText(`<p class="other">${data}</p>`);
   });
+  //   p.on("close", () => {
+  //     console.log("connection closed...");
+  //   });
 };
 
 const sendMessage = (ev) => {
