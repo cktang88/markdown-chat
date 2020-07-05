@@ -2,8 +2,8 @@ let p;
 
 let isConnected = false;
 
-const clearOutput = () => {
-  document.getElementById("outgoing").innerHTML = "";
+const clearOutput = (val = "") => {
+  document.getElementById("outgoing").innerHTML = val;
 };
 const clearInput = () => {
   document.getElementById("incoming").value = "";
@@ -12,12 +12,27 @@ const addText = (html) => {
   document.getElementById("outgoing").innerHTML += html;
 };
 
-let reConnect = (ev) => {
+let reConnect = async (ev) => {
   ev.preventDefault();
   // destroy current connection
   console.log("destroying connection");
   if (p) p.destroy();
-  const isInitiator = document.getElementById("isInitiator").checked;
+  const isInitiator = await fetch(
+    "https://signalserver.glitch.me/assignInitiator",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        me: document.getElementById("me").value,
+        them: document.getElementById("them").value,
+      }),
+    }
+  )
+    .then((res) => res.json())
+    .then((res) => res.isInitiator)
+    .catch((err) => console.log(err));
 
   console.log("making new connection...", isInitiator);
   p = new SimplePeer({
@@ -62,8 +77,9 @@ let reConnect = (ev) => {
       })
         .then((res) => res.json())
         .then(() => {
-          var interval = setInterval(function () {
-            console.log("waiting...");
+          let iters = 0;
+          let interval = setInterval(function () {
+            clearOutput("waiting..." + iters);
             fetch(
               `https://signalserver.glitch.me/answer/${
                 document.getElementById("them").value
@@ -77,6 +93,7 @@ let reConnect = (ev) => {
                 clearInterval(interval);
                 p.signal(JSON.parse(answer));
               });
+            iters += 1;
           }, 1000);
         });
     } else {
