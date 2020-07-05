@@ -24,6 +24,10 @@ app.post("/offer", (req, res) => {
     if (answers[them]) {
       clearInterval(interval);
       res.status(200).json(answers[them]);
+
+      // clear server mem after use
+      delete answers[them];
+      delete offers[me];
       hasAnswer = true;
     }
     console.log("waiting...");
