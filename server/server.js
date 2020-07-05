@@ -21,6 +21,7 @@ app.post("/offer", (req, res) => {
   // poll until an answer arrives
   let hasAnswer = false;
   var interval = setInterval(function () {
+    console.log("waiting...", offers, answers);
     if (answers[them]) {
       clearInterval(interval);
       res.status(200).json(answers[them]);
@@ -28,8 +29,8 @@ app.post("/offer", (req, res) => {
       // clear server mem after use
       delete answers[them];
       hasAnswer = true;
+      console.log("connection completed.");
     }
-    console.log("waiting...", offers, answers);
   }, 1000);
 
   // if(hasAnswer) return

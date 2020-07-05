@@ -38,130 +38,20 @@
     </style>
 
     <pre id="outgoing"></pre>
-    <form>
+    <form id='connectform'>
+      <label>My ID</label>
+      <input id="me" placeholder="my ID"></input>
+      <label>Their ID</label>
+      <input id="them" placeholder="their ID"></input>
+      <button type="submit">Connect</button>
+    </form>
+    <form id='chatform'>
       <textarea id="incoming"></textarea>
       <button type="submit">submit</button>
     </form>
     <script src="./simplepeer.min.js"></script>
-    <!-- <script src="./peerjs.min.js"></script> -->
-    <script>
-      const isInitiator = location.hash === "#1";
-      const p = new SimplePeer({
-        initiator: location.hash === "#1",
-        trickle: false,
-      });
+    <script src='main.js'>
 
-      let isConnected = false;
-
-      p.on("error", (err) => console.log("error", err));
-
-      p.on("signal", (data) => {
-        console.log("SIGNAL", JSON.stringify(data));
-
-        if (isInitiator) {
-          fetch("https://signalserver.glitch.me/offer", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              me: "a",
-              them: "b",
-              sdp: JSON.stringify(data),
-            }),
-          })
-            .then((res) => res.json())
-            .then((answer) => p.signal(JSON.parse(answer)));
-        } else {
-          fetch("https://signalserver.glitch.me/answer", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              me: "b",
-              them: "a",
-              sdp: JSON.stringify(data),
-            }),
-          });
-        }
-        // document.querySelector("#outgoing").textContent = JSON.stringify(data);
-      });
-
-      const clearOutput = () => {
-        document.getElementById("outgoing").innerHTML = "";
-      };
-      const clearInput = () => {
-        document.getElementById("incoming").value = "";
-      };
-      const addText = (html) => {
-        document.getElementById("outgoing").innerHTML += html;
-      };
-
-      document.querySelector("form").addEventListener("submit", (ev) => {
-        ev.preventDefault();
-        let val = document.getElementById("incoming").value;
-        // console.log(val);
-        if (!isConnected) {
-          if (!isInitiator) {
-            fetch(`https://signalserver.glitch.me/offer/${"a"}`)
-              .then((res) => res.json())
-              .then((offer) => {
-                console.log(offer);
-                p.signal(JSON.parse(offer));
-              })
-              .catch((err) => console.log(err));
-          }
-        } else {
-          p.send(val);
-          clearInput();
-          addText(`<p class="me">${val}</p>`);
-        }
-      });
-
-      p.on("connect", () => {
-        console.log("CONNECTED");
-        isConnected = true;
-        clearOutput();
-        // clearInput();
-      });
-
-      p.on("data", (data) => {
-        console.log("data: " + data);
-        addText(`<p class="other">${data}</p>`);
-      });
-
-      // let [me, dest] = location.hash.substr(1).split(",");
-      // const peer = new Peer(me, {
-      //   debug: 3,
-      // });
-      // console.log(peer, me, dest);
-
-      // const conn = peer.connect(dest);
-      // conn.on("open", () => {
-      //   console.log(">>> SENDING hi");
-      //   conn.send("hi!");
-      // });
-      // conn.on("connection", (data) => {
-      //   console.log("WOW");
-      // });
-
-      // conn.on("error", (err) => console.log("error setting up conn", err));
-
-      // peer.on("connection", (conn) => {
-      //   conn.on("data", (data) => {
-      //     // Will print 'hi!'
-      //     console.log(">>> printing data");
-      //     console.log(data);
-      //   });
-      //   conn.on("open", () => {
-      //     console.log(">>> SENDING hello");
-      //     conn.send("hello!");
-      //   });
-      // });
-      // peer.on("error", (err) => {
-      //   console.log("error connecting!!!", err);
-      // });
     </script>
   </body>
 </html>

@@ -31,7 +31,8 @@ let reConnect = (ev) => {
     fetch(
       `https://signalserver.glitch.me/offer/${
         document.getElementById("them").value
-      }/${document.getElementById("me").value}`
+      }`
+      //${ document.getElementById("me").value }
     )
       .then((res) => res.json())
       .then((offer) => {
