@@ -5,85 +5,110 @@
         background-color: #d6d7dd;
       }
       #outgoing {
-        width: 600px;
+        width: 1000px;
         word-wrap: break-word;
         white-space: normal;
         border: 1px solid black;
       }
       #incoming {
-        width: 300px;
+        width: 1000px;
         height: 200px;
         margin: 20px;
         font-size: 16px;
       }
+      .me {
+        text-align: right;
+        color: blue;
+      }
+      .other {
+        text-align: left;
+        color: green;
+      }
     </style>
+
+    <pre id="outgoing"></pre>
     <form>
       <textarea id="incoming"></textarea>
       <button type="submit">submit</button>
     </form>
-    <pre id="outgoing"></pre>
-    <!-- <script src="./simplepeer.min.js"></script> -->
-    <script src="./peerjs.min.js"></script>
+    <script src="./simplepeer.min.js"></script>
+    <!-- <script src="./peerjs.min.js"></script> -->
     <script>
-      // const p = new SimplePeer({
-      //   initiator: location.hash === "#1",
-      //   trickle: false,
-      // });
-
-      // p.on("error", (err) => console.log("error", err));
-
-      // p.on("signal", (data) => {
-      //   console.log("SIGNAL", JSON.stringify(data));
-      //   document.querySelector("#outgoing").textContent = JSON.stringify(data);
-      // });
-
-      // document.querySelector("form").addEventListener("submit", (ev) => {
-      //   ev.preventDefault();
-      //   let val = document.getElementById("incoming").value;
-      //   // console.log(val);
-      //   p.signal(JSON.parse(val));
-      // });
-
-      // p.on("connect", () => {
-      //   console.log("CONNECT");
-      //   p.send("whatever" + Math.random());
-      // });
-
-      // p.on("data", (data) => {
-      //   console.log("data: " + data);
-      // });
-
-      let [me, dest] = location.hash.substr(1).split(",");
-      const peer = new Peer(me, {
-        debug: 3,
-      });
-      console.log(peer, me, dest);
-
-      const conn = peer.connect(dest);
-      conn.on("open", () => {
-        console.log(">>> SENDING hi");
-        conn.send("hi!");
-      });
-      conn.on("connection", (data) => {
-        console.log("WOW");
+      const p = new SimplePeer({
+        initiator: location.hash === "#1",
+        trickle: false,
       });
 
-      conn.on("error", (err) => console.log("error setting up conn", err));
+      let isConnected = false;
 
-      peer.on("connection", (conn) => {
-        conn.on("data", (data) => {
-          // Will print 'hi!'
-          console.log(">>> printing data");
-          console.log(data);
-        });
-        conn.on("open", () => {
-          console.log(">>> SENDING hello");
-          conn.send("hello!");
-        });
+      p.on("error", (err) => console.log("error", err));
+
+      p.on("signal", (data) => {
+        console.log("SIGNAL", JSON.stringify(data));
+        document.querySelector("#outgoing").textContent = JSON.stringify(data);
       });
-      peer.on("error", (err) => {
-        console.log("error connecting!!!", err);
+
+      const clearOutput = () => {
+        document.getElementById("outgoing").innerHTML = "";
+      };
+      const addText = (html) => {
+        document.getElementById("outgoing").innerHTML += html;
+      };
+
+      document.querySelector("form").addEventListener("submit", (ev) => {
+        ev.preventDefault();
+        let val = document.getElementById("incoming").value;
+        // console.log(val);
+        if (!isConnected) p.signal(JSON.parse(val));
+        else {
+          p.send(val);
+          clearOutput();
+          addText(`<p class="me">${val}</p>`);
+        }
       });
+
+      p.on("connect", () => {
+        console.log("CONNECTED");
+        isConnected = true;
+        clearOutput();
+      });
+
+      p.on("data", (data) => {
+        console.log("data: " + data);
+        addText(`<p class="other">${data}</p>`);
+      });
+
+      // let [me, dest] = location.hash.substr(1).split(",");
+      // const peer = new Peer(me, {
+      //   debug: 3,
+      // });
+      // console.log(peer, me, dest);
+
+      // const conn = peer.connect(dest);
+      // conn.on("open", () => {
+      //   console.log(">>> SENDING hi");
+      //   conn.send("hi!");
+      // });
+      // conn.on("connection", (data) => {
+      //   console.log("WOW");
+      // });
+
+      // conn.on("error", (err) => console.log("error setting up conn", err));
+
+      // peer.on("connection", (conn) => {
+      //   conn.on("data", (data) => {
+      //     // Will print 'hi!'
+      //     console.log(">>> printing data");
+      //     console.log(data);
+      //   });
+      //   conn.on("open", () => {
+      //     console.log(">>> SENDING hello");
+      //     conn.send("hello!");
+      //   });
+      // });
+      // peer.on("error", (err) => {
+      //   console.log("error connecting!!!", err);
+      // });
     </script>
   </body>
 </html>

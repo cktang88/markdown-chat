@@ -1,5 +1,8 @@
 # markdown chat app
 
+NOTE: MARKDOWN IS INHERENTLY UNSAFE:
+https://github.com/showdownjs/showdown/wiki/Markdown's-XSS-Vulnerability-(and-how-to-mitigate-it)
+
 ### DB structure
 
 ```json
