@@ -1,8 +1,4 @@
-const isInitiator = location.hash === "#1";
-var p = new SimplePeer({
-  initiator: isInitiator,
-  trickle: false,
-});
+let p;
 
 let isConnected = false;
 
@@ -20,7 +16,9 @@ let reConnect = (ev) => {
   ev.preventDefault();
   // destroy current connection
   console.log("destroying connection");
-  p.destroy();
+  if (p) p.destroy();
+  const isInitiator = document.getElementById("isInitiator").checked;
+
   console.log("making new connection...", isInitiator);
   p = new SimplePeer({
     initiator: isInitiator,
@@ -39,7 +37,10 @@ let reConnect = (ev) => {
         console.log("received offer: ", offer);
         p.signal(JSON.parse(offer));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        alert("Please initiate a connection by checking the checkbox.");
+        console.log(err);
+      });
   }
 
   p.on("error", (err) => console.log("error", err));
@@ -97,12 +98,10 @@ const sendMessage = (ev) => {
   ev.preventDefault();
   let val = document.getElementById("incoming").value;
   // console.log(val);
-  if (!isConnected) {
-  } else {
-    p.send(val);
-    clearInput();
-    addText(`<p class="me">${val}</p>`);
-  }
+  if (!isConnected || !p) return;
+  p.send(val);
+  clearInput();
+  addText(`<p class="me">${val}</p>`);
 };
 document.getElementById("connectform").addEventListener("submit", reConnect);
 
