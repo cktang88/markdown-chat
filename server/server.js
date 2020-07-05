@@ -16,7 +16,7 @@ app.post("/offer", (req, res) => {
   let { me, them, sdp } = req.body;
   console.log(me, them, sdp);
   // store offer
-  if (!offers[me]) offers[me] = sdp;
+  offers[me] = sdp;
 
   // poll until an answer arrives
   let hasAnswer = false;
