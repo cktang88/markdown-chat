@@ -17,31 +17,22 @@ app.post("/offer", (req, res) => {
   console.log(me, them, sdp);
   // store offer
   offers[me] = sdp;
+  res.status(200).json("Offer received by server.");
+});
 
-  // poll until an answer arrives
-  let hasAnswer = false;
-  var interval = setInterval(function () {
-    console.log("waiting...", offers, answers);
-    if (answers[them]) {
-      clearInterval(interval);
-      res.status(200).json(answers[them]);
-
-      // clear server mem after use
-      delete answers[them];
-      hasAnswer = true;
-      console.log("connection completed.");
-    }
-  }, 1000);
-
-  // if(hasAnswer) return
-  // else {
-  //   res.status(400).json("No answer found")
-  // }
+app.get("/answer/:them", (req, res) => {
+  let { them } = req.params;
+  if (answers[them]) {
+    console.log("connection successful.");
+  }
+  res.json(answers[them] || {});
+  // answers are deleted as soon as they're read
+  delete answers[them];
 });
 
 app.get("/offer/:them", (req, res) => {
   let { them } = req.params;
-  res.json(offers[them]);
+  res.json(offers[them] || {});
   // offers are deleted as soon as they're read
   delete offers[them];
 });

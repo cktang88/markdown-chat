@@ -61,9 +61,23 @@ let reConnect = (ev) => {
         }),
       })
         .then((res) => res.json())
-        .then((answer) => {
-          console.log("received answer: ", answer);
-          p.signal(JSON.parse(answer));
+        .then(() => {
+          var interval = setInterval(function () {
+            console.log("waiting...");
+            fetch(
+              `https://signalserver.glitch.me/answer/${
+                document.getElementById("them").value
+              }`
+              //${ document.getElementById("me").value }
+            )
+              .then((res) => res.json())
+              .then((answer) => {
+                if (!answer || Object.keys(answer).length == 0) return;
+                console.log("received answer: ", answer);
+                clearInterval(interval);
+                p.signal(JSON.parse(answer));
+              });
+          }, 1000);
         });
     } else {
       fetch("https://signalserver.glitch.me/answer", {
