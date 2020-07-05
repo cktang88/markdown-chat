@@ -27,10 +27,9 @@ app.post("/offer", (req, res) => {
 
       // clear server mem after use
       delete answers[them];
-      delete offers[me];
       hasAnswer = true;
     }
-    console.log("waiting...");
+    console.log("waiting...", offers, answers);
   }, 1000);
 
   // if(hasAnswer) return
@@ -42,15 +41,15 @@ app.post("/offer", (req, res) => {
 app.get("/offer/:them", (req, res) => {
   let { them } = req.params;
   res.json(offers[them]);
+  // offers are deleted as soon as they're read
+  delete offers[them];
 });
 
 app.post("/answer", (req, res) => {
   let { me, them, sdp } = req.body;
-
   // store answer
   answers[me] = sdp;
-  // return offer
-  res.json(offers[them]);
+  res.status(200).json("Answer received by server.");
 });
 
 // listen for requests :)
