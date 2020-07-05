@@ -58,6 +58,14 @@ How to connect (essentially just need to swap SDPs):
 
 - comparison of instant messaging protocols - https://en.wikipedia.org/wiki/Comparison_of_instant_messaging_protocols
 
+### Webrtc security:
+
+mDNS to protect from IP leak:
+https://bloggeek.me/psa-mdns-and-local-ice-candidates-are-coming/
+
+- https://github.com/mafintosh/multicast-dns
+- https://github.com/agnat/node_mdns
+
 FB messenger has markdown, but no editing/syntax highlight/threads
 
 ### Other p2p chat tech

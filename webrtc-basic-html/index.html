@@ -34,6 +34,7 @@
     <script src="./simplepeer.min.js"></script>
     <!-- <script src="./peerjs.min.js"></script> -->
     <script>
+      const isInitiator = location.hash === "#1";
       const p = new SimplePeer({
         initiator: location.hash === "#1",
         trickle: false,
@@ -45,7 +46,35 @@
 
       p.on("signal", (data) => {
         console.log("SIGNAL", JSON.stringify(data));
-        document.querySelector("#outgoing").textContent = JSON.stringify(data);
+
+        if (isInitiator) {
+          fetch("https://signalserver.glitch.me/offer", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              me: "a",
+              them: "b",
+              sdp: JSON.stringify(data),
+            }),
+          })
+            .then((res) => res.json())
+            .then((answer) => p.signal(JSON.parse(answer)));
+        } else {
+          fetch("https://signalserver.glitch.me/answer", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              me: "b",
+              them: "a",
+              sdp: JSON.stringify(data),
+            }),
+          });
+        }
+        // document.querySelector("#outgoing").textContent = JSON.stringify(data);
       });
 
       const clearOutput = () => {
@@ -62,8 +91,17 @@
         ev.preventDefault();
         let val = document.getElementById("incoming").value;
         // console.log(val);
-        if (!isConnected) p.signal(JSON.parse(val));
-        else {
+        if (!isConnected) {
+          if (!isInitiator) {
+            fetch(`https://signalserver.glitch.me/offer/${"a"}`)
+              .then((res) => res.json())
+              .then((offer) => {
+                console.log(offer);
+                p.signal(JSON.parse(offer));
+              })
+              .catch((err) => console.log(err));
+          }
+        } else {
           p.send(val);
           clearInput();
           addText(`<p class="me">${val}</p>`);
