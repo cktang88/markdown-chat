@@ -5,6 +5,10 @@
 website at: https://mdchat.netlify.app
 server at: https://glitch.com/edit/#!/signalserver
 
+HOW TO USE:
+1. Both parties need to agree on IDs ahead of time
+2. simply have both people input their IDs respectively in the form at the top of the page, and they will be automatically connected via a peer-to-peer system.
+
 
 
 
