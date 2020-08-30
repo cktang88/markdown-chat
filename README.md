@@ -13,7 +13,7 @@ https://github.com/showdownjs/showdown/wiki/Markdown's-XSS-Vulnerability-(and-ho
 
 ### DB structure
 
-```json
+```js
 {
   // user email
   "email": <email>,
